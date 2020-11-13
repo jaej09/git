@@ -1,4 +1,4 @@
-# Git
+# #1 Basic Git Concepts
 
 ## 저장소 만들기
 
@@ -71,11 +71,40 @@ git diff 38c9827e8f1e448506abfcf2b1c77ffd00dfd391..7d1bd71aa04221e98bd8b917c34ec
 
 `git diff --staged` staging area와 repository 에 있는 파일들을 비교해준다.
 
+
+## Areas
+
+- **Working Directory / Working Area**: 현재 작업하고 있는 곳
+- **Staging Area**: Which files are going to be committed.
+- **Repository Area / Commit Area**: Git Version Control 에 추가된 Data files.
+
+# #2 GITHUB
+
+## Git fork
+
+해당 Repository 를 나의 Repository 로 복사하는 것이다.
+
+## Pull Requests
+
+Pull requests let you tell others about changes you've pushed to a branch in a repository on GitHub. [More info](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests)
+
+## Origin and Upstream
+
+Fork 하게 되면 Default Branch인 Master가 Origin이고, 내가 Fork한 다른 사람의 Repository 즉, Original Repository가 Upstream이다.
+
+## Issues
+
+# #3 CLI
+
+## CLI log, commit, push
+
+`git push origin master`
+
+`git push origin main` - Push main(Local) branch to origin(Github)
+
 ## 과거의 버전으로 돌아가기
 
-### Reset
-
-#### Reset --hard
+### Hard Reset
 
 대부분의 깃 명령어는 이전 커밋의 복원으로 되돌릴 수 있지만 _working directory_ 와 _staging area_ 에 속해있는 파일들은 커밋을 하지 않았기 때문에 다음 명령어를 사용하면 **되돌릴 수 없다**.
 
@@ -97,15 +126,22 @@ git reset --hard HEAD^
 git push origin master --force
 ```
 
-#### Reset --soft
+### Soft Reset
 
-커밋만 삭제하고 삭제된 변경사항들은 **Staging Area** 에 둔다. Unstaged 파일을 변경하고 있는 경우 Soft Reset 을 사용하면 된다.
+커밋만 삭제하고 삭제된 변경사항들은 **Staging Area** 에 둔다. Unstage 영역에 작업중인 파일이 있을 때, Soft Reset 을 사용하면 된다.
 
-#### Reset --mixed (DEFAULT)
+### Mixed Reset (DEFAULT)
 
-커밋만 삭제하고 변경된 사항들은 **Unstaged** 상태로 둔다.
+커밋만 삭제하고 변경된 사항들은 **Unstage** 상태로 둔다. 
+
+```
+git push origin master --force
+```
 
 ## Amending Commits
+
+가장 마지막 Commit을 수정한다.
+실수로 하나의 파일을 빼고 Commit 한 경우 `git add .`로 Unstage 파일을 추가한 다음 `git commit --amend --no-edit`으로 기존 Commit에 빠트렸던 파일을 추가할 수 있다.
 
 `--no-edit` 커밋 메세지는 수정하고 싶지 않을 때 추가하면 된다. 파일만 추가되고 커밋 메세지는 이전과 동일하다.
 
@@ -133,7 +169,7 @@ git rm -r images/ --cached
 
 - `git branch` - 브랜치 전체보기
 - `git branch exp` - exp 브랜치 생성
-- `git checkout exp` - exp 브랜치 사용
+- `git checkout -b exp` - exp 브랜치 사용 (If you want to create a new branch to retain commits you create, you do so by using -b with the checkout command.)
 
 ### 브랜치 확인
 
@@ -201,23 +237,6 @@ git stash apply; git stash drop;
 git stash pop (위 코드 shorthand)
 ```
 
-## 용어
-
-- **stage**: 커밋 대기하고 있는 파일들이 가는 곳
-- **repository**: 커밋이 된 파일이 저장되는 곳
-- **ls -al**
-- **HEAD**: HEAD는 현재 브랜치를 가리키는 포인터이며, 브랜치는 브랜치에 담긴 커밋 중 가장 마지막 커밋을 가리킨다. 지금의 HEAD가 가리키는 커밋은 바로 다음 커밋의 부모가 된다. 단순하게 생각하면 HEAD는 **현재 브랜치 마지막 커밋의 스냅샷**이다.
-- **Index**: Index는 바로 다음에 커밋할 것들이다. 이미 앞에서 우리는 이런 개념을 “Staging Area” 라고 배운 바 있다. “Staging Area” 는 사용자가 `git commit` 명령을 실행했을 때 Git이 처리할 것들이 있는 곳이다.
-- **M** stands for Modified.
-- **U** stands for Untracked (아직은 Git이 이 파일을 등록되지 않았고, Git이 관찰하지 않고 있다.)
-- `git commit -help` 어떤 옵션들이 있는지 보여준다.
-
-## Areas
-
-- **Working Directory / Working Area**: 현재 작업하고 있는 곳
-- **Staging Area**: Which files are going to be committed.
-- **Repository Area / Commit Area**: Git Version Control 에 추가된 Data files.
-
 ## Git Remote
 
 연결되어 있는 원격 서버 목록을 보여준다
@@ -246,161 +265,12 @@ Fork 하지 않은 Repository를 Clone 하면 파일을 내려받을 수는 있�
 git clone <주소>
 ```
 
----
+# Terms
 
-# Github
-
-## Fork
-
-해당 Repository 를 나의 Repository 로 복사하는 것이다.
-
-## Pull Requests
-
-Pull requests let you tell others about changes you've pushed to a branch in a repository on GitHub. [More info](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests)
-
----
-
-# NPM
-
-## NPM Help
-
-```
-$ npm help-search [검색하고 싶은 것]
-$ npm help-search update -> 업데이트와 관련된 모든 명령어를 보여준다.
-```
-
-## Package.json
-
-- Manage dependencies
-- Help initial build `npm init` (`npm init --yes` 를 입력하면 default value 만 입력된 package.json 을 생성한다.)
-
-### Default Value 생성하는 법
-
-```
-$ npm config set init-author-name "Jae"
-$ npm set init-license "MIT"
-```
-
-### Default Value 확인하는 법
-
-```
-$ npm config get init-author-name
-$ npm get init-license
-```
-
-### Default Value 삭제하는 법
-
-```
-$ npm config delete init-author-name
-$ npm delete init-license
-```
-
-## Local Packages
-
-### Install Local Packages
-
-- `npm install [package name] --save` Save packages as dependencies.
-- `npm install [package name] --save-dev` Install packages just for development purpose, which means this is not required for production. This is saved as devDependencies.
-
-### Uninstall Local Packages
-
-- `npm uninstall [pacakge name]`
-- `npm uninstall [pacakge name] --save` Remove packages saved as dependencies.
-- `npm uninstall [pacakge name] --save-dev` Remove packages saved as devDependencies.
-
-## Global Packages
-
-- `npm install [package name] -g` Install Global Packages
-- `npm uninstall [package name] -g` Uninstall Global Packages
-
-## Listing Packages
-
-- `npm list --depth 1`
-- `npm list --global true --depth 0`
-
-## NPM Versioning
-
-4.16.1 (Major. Minor. Patch)
-
-- Major Version: When there is a break in the existing functionality.
-- Minor Version: When there is a new feature. But the feature is not going to break any existing functionality.
-- Patch Version: Anytime there is a bug fix or a performance improvement, patch number gets incremented.
-
-### Example
-
-```
-Install major version 4 / minor version 14 / **latest** patch version.
-$ npm install lodash@4.14 --save
-
-Install major version 4 / **latest** minor version / **latest** patch version.
-$ npm install lodash@4 --save
-```
-
-## Updating Packages
-
-### Update a specific package.
-
-```
-$ npm update loadsh --save
-```
-
-### Update packages saved as devDependencies.
-
-```
-$ npm update --save-dev
-```
-
-### Update global packages.
-
-```
-$ npm update -g
-$ npm update -g gulp
-$ npm install npm@latest -g
-```
-
-## NPM Prune
-
-Extraneous: I have packages in my project folder, but not in the packages.json file.
-
-```
-$ npm list --depth 0
-
-> +--lodash@4.16.1 extraneous
-> +--moment@4.16.1 extraneous
-> +--underscore@4.16.1 extraneous
-```
-
-In order to remove these additional packages (extraneous), run `npm prune`.
-
-## Shortcuts
-
-- `npm init --yes` is same as `npm init -y`
-- `npm install lodash` is same as `npm i lodash`
-- `npm i lodash --save` is same as `npm i lodash -S`
-- `npm i lodash --save-dev` is same as `npm i lodash -D`
-
-## NPM Scripts
-
-package.json
-
-```
-{
-    "scripts":{
-        "start": "node app.js"
-    }
-}
-
-```
-
-app.js
-
-```
-console.log('NPM Script Test');
-```
-
-Terminal App
-
-```
-$ npm start
-> NPM Script Test
-```
+- **Repository**: 커밋이 된 파일이 저장되는 곳
+- **ls -al**
+- **HEAD**: HEAD는 현재 브랜치를 가리키는 포인터이며, 브랜치는 브랜치에 담긴 커밋 중 가장 마지막 커밋을 가리킨다. 지금의 HEAD가 가리키는 커밋은 바로 다음 커밋의 부모가 된다. 단순하게 생각하면 HEAD는 **현재 브랜치 마지막 커밋의 스냅샷**이다.
+- **Index**: Index는 바로 다음에 커밋할 것들이다. 이미 앞에서 우리는 이런 개념을 “Staging Area” 라고 배운 바 있다. “Staging Area” 는 사용자가 `git commit` 명령을 실행했을 때 Git이 처리할 것들이 있는 곳이다.
+- **M** stands for Modified.
+- **U** stands for Untracked (아직은 Git이 이 파일을 등록되지 않았고, Git이 관찰하지 않고 있다.)
+- `git commit -help` 어떤 옵션들이 있는지 보여준다.
